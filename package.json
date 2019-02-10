@@ -1,0 +1,25 @@
+{
+  "name": "poi-web-application-v1",
+  "version": "1.0.0",
+  "description": "Point of intrest web application for college assessment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Boomatang/POI-Web-Application-V1.git"
+  },
+  "author": "James Fitzpatrick",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Boomatang/POI-Web-Application-V1/issues"
+  },
+  "homepage": "https://github.com/Boomatang/POI-Web-Application-V1#readme",
+  "dependencies": {
+    "handlebars": "^4.1.0",
+    "hapi": "^18.1.0",
+    "inert": "^5.1.2",
+    "vision": "^5.4.4"
+  }
+}
