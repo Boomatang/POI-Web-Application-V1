@@ -1,6 +1,8 @@
 'use strict';
 
 const Hapi = require('hapi');
+require('dotenv').config();
+require('./app/models/db');
 
 const server = Hapi.server({
   port: 3000,
@@ -11,6 +13,7 @@ const server = Hapi.server({
 async function init() {
   await server.register(require('inert'));
   await server.register(require('vision'));
+  await server.register(require('hapi-auth-cookie'));
 
   server.views({
     engines: {
@@ -24,11 +27,23 @@ async function init() {
     isCached: false
   });
 
+  server.auth.strategy('standard', 'cookie', {
+    password: process.env.COOKIE_PASSWORD,
+    cookie: process.env.COKKIE_NAME,
+    isSecure: false,
+    ttl: 24*60*60*1000,
+    redirectTo: '/'
+  });
+
+  server.auth.default({
+    mode: 'required',
+    strategy: 'standard'
+  });
+
   server.route(require('./routes'));
   await server.start();
   console.log(`Server running at: ${server.info.uri}`);
 }
-
 
 process.on('unhandledRejection', err => {
   console.log(err);
