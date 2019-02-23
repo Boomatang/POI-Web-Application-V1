@@ -19,5 +19,44 @@
       "email": "bart@simpson.com",
       "password": "secret"
     }
+  },
+  "pois": {
+    "_model": "Poi",
+    "place1": {
+      "name": "Place 1",
+      "description": "This is sample one",
+      "coastalZone": "Its by the sea",
+      "geo": {
+        "lat": 23.44,
+        "long": 56.44
+      }
+    },
+    "place2": {
+      "name": "Place 3",
+      "description": "This is sample one",
+      "coastalZone": "Its by the sea",
+      "geo": {
+        "lat": 23.44,
+        "long": 56.44
+      }
+    },
+    "place3": {
+      "name": "Place 3",
+      "description": "This is sample one",
+      "coastalZone": "Its by the sea",
+      "geo": {
+        "lat": 23.44,
+        "long": 56.44
+      }
+    },
+    "place4": {
+      "name": "Place 4",
+      "description": "This is sample one",
+      "coastalZone": "Its by the sea",
+      "geo": {
+        "lat": 23.44,
+        "long": 56.44
+      }
+    }
   }
 }

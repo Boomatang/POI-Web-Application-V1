@@ -5,6 +5,8 @@ const Accounts = require('./app/controllers/accounts');
 
 module.exports = [
   {method: 'GET', path: '/home', config: POI.home},
+  {method: 'GET', path: '/poi/create', config: POI.showCreate},
+  {method: 'POST', path: '/poi/create', config: POI.create},
 
   {method: 'GET', path: '/', config: Accounts.index},
   { method: 'GET', path: '/signup', config: Accounts.showSignup },

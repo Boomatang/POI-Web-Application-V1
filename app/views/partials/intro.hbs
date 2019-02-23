@@ -1,3 +1,11 @@
-<section class="ui raised segment">
+<section class="ui ">
   <h1>Welcome to the POI's</h1>
+  {{#each pois}}
+    <div class="ui raised segment">
+      <h1>{{name}}</h1>
+      <h2>{{coastalZone}}</h2>
+      <p>{{description}}</p>
+      <p>Longitude : {{geo.long}}  Latitude : {{geo.lat}}</p>
+    </div>
+  {{/each}}
 </section>
