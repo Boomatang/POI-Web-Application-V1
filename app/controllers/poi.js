@@ -36,6 +36,50 @@ const POI = {
       return h.view('create_poi', {title: 'Create POI'});
     }
   },
+  view: {
+    handler: async function(request, h){
+      let place = await Poi.findById(request.params.id);
+      console.log(place);
+      return h.view('view_poi', {title: place.name, poi: place})
+    }
+  },
+
+  delete_poi: {
+    handler: async function(request, h){
+
+      await Poi.deleteById(request.params.id);
+
+      return h.redirect('/home')
+    }
+  },
+
+  show_update_poi: {
+    handler: async function(request, h){
+
+      let place = await Poi.findById(request.params.id);
+
+
+      return h.view('update_poi', {title: 'Update' + place.name, poi: place})
+    }
+  },
+
+  update_poi: {
+    handler: async function(request, h){
+
+      const edit_place = request.payload;
+      const place = await Poi.findById(request.params.id);
+
+      place.name = edit_place.name;
+      place.description = edit_place.description;
+      place.coastalZone = edit_place.coastalZone;
+      place.geo.lat = edit_place.lat;
+      place.geo.long = edit_place.long;
+
+      await place.save();
+
+      return h.redirect(`/poi/${place._id}`)
+    }
+  }
 
 };
 

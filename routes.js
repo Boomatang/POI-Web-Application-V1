@@ -7,6 +7,10 @@ module.exports = [
   {method: 'GET', path: '/home', config: POI.home},
   {method: 'GET', path: '/poi/create', config: POI.showCreate},
   {method: 'POST', path: '/poi/create', config: POI.create},
+  {method: 'GET', path: '/poi/{id}', config: POI.view},
+  {method: 'GET', path: '/poi/delete/{id}', config: POI.delete_poi},
+  {method: 'GET', path: '/poi/update/{id}', config: POI.show_update_poi},
+  {method: 'POST', path: '/poi/update/{id}', config: POI.update_poi},
 
   {method: 'GET', path: '/', config: Accounts.index},
   { method: 'GET', path: '/signup', config: Accounts.showSignup },

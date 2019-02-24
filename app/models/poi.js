@@ -15,4 +15,18 @@ const poiSchema = new Schema({
   }
 });
 
+poiSchema.statics.findById = function(id){
+  return this.findOne({_id: id});
+};
+
+poiSchema.statics.deleteById = function(id){
+
+  console.log('Page brake');
+  console.log(id);
+
+  this.deleteOne({name: 'Place 1'});
+
+};
+
+
 module.exports = mongoose.model('Poi', poiSchema);

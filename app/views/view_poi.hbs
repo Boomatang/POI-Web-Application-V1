@@ -1,0 +1,17 @@
+{{> mainmenu }}
+
+<section class="ui stacked segment">
+  <div class="ui grid">
+    <aside class="six wide column">
+      <img src="../images/homer.png" class="ui medium image">
+    </aside>
+    <article class="ten wide column">
+      {{> editmenu }}
+      <header class="ui  header"> Name : {{poi.name}}</header>
+      <header class="ui small header">Coastal Zone : {{poi.coastZone}}</header>
+      <header class="ui tiny header">Longitude : {{poi.geo.long}}</header>
+      <header class="ui tiny header">Latitude : {{poi.geo.lat}}</header>
+      <p> {{poi.description}} </p>
+    </article>
+  </div>
+</section>

@@ -1,0 +1,11 @@
+<nav class="ui menu">
+  <header class="header item"> POI Actions</header>
+  <div class="left menu">
+    <a id="home"   class= "item" href="/poi/update/{{poi._id}}"> Edit POI</a>
+    <a id="delete" class= "item" href="/poi/delete/{{poi._id}}"> Delete POI</a>
+  </div>
+</nav>
+
+<script>
+  $("#{{_id}}").addClass("active item");
+</script>
