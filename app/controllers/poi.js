@@ -3,6 +3,7 @@
 const Poi = require('../models/poi');
 const cloudinary = require('cloudinary');
 const fs = require('fs');
+const unidv4 = require('uuid/v4');
 
 const POI = {
   home: {
@@ -25,28 +26,35 @@ const POI = {
           }
         });
 
-        const new_image = payload.fileUpload.toString('utf8');
-
-        // const image = await cloudinary.uploader.upload(new_image, {"tags":"basic_sample","width":500,"height":500,"crop":"fit"});
-
-        const upload_stream = cloudinary.uploader.upload_stream({tags: 'sample'}, function(err){
-          if (err){
+        const file_name = unidv4() + '.jpg';
+        const new_image = payload.fileUpload;
+        fs.writeFile(file_name, new_image, 'binary', function(err) {
+          if (err)
             console.log(err);
-          }
+          else
+            console.log("The file was saved!");
         });
 
-        console.log(new_image);
 
-        const image = fs.createReadStream(new_image).pipe(upload_stream);
-        console.log(image);
+        const image = await cloudinary.uploader.upload(file_name, {
+          "tags":"basic_sample",
+          "width":500,
+          "height":500,
+          "crop":"fit"
+        });
 
         poi.image = image.secure_url;
 
 
         await poi.save();
+        fs.unlink(file_name, (err) => {
+          if (err) throw err;
+          console.log(`${file_name} was deleted`);
+        });
 
         return h.redirect('/home');
       } catch (err) {
+        console.log(err);
         return h.view('create_poi', {title: "Create POI - Error", errors: [{message: err.message}]});
       }
     }
