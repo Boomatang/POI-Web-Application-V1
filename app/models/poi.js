@@ -25,7 +25,12 @@ poiSchema.statics.deleteById = function(id){
   console.log('Page brake');
   console.log(id);
 
-  this.deleteOne({name: 'Place 1'});
+  this.findOneAndDelete({_id: id}, function(err) {
+    if (err)
+      console.log(err);
+    else
+      console.log("Entry has been deleted");
+  });
 
 };
 
