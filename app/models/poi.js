@@ -12,7 +12,8 @@ const poiSchema = new Schema({
   geo: {
     lat: Number,
     long: Number
-  }
+  },
+  image: String
 });
 
 poiSchema.statics.findById = function(id){

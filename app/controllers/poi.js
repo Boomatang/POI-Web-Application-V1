@@ -1,6 +1,8 @@
 'use strict';
 
 const Poi = require('../models/poi');
+const cloudinary = require('cloudinary');
+const fs = require('fs');
 
 const POI = {
   home: {
@@ -22,6 +24,24 @@ const POI = {
             long: payload.long
           }
         });
+
+        const new_image = payload.fileUpload.toString('utf8');
+
+        // const image = await cloudinary.uploader.upload(new_image, {"tags":"basic_sample","width":500,"height":500,"crop":"fit"});
+
+        const upload_stream = cloudinary.uploader.upload_stream({tags: 'sample'}, function(err){
+          if (err){
+            console.log(err);
+          }
+        });
+
+        console.log(new_image);
+
+        const image = fs.createReadStream(new_image).pipe(upload_stream);
+        console.log(image);
+
+        poi.image = image.secure_url;
+
 
         await poi.save();
 

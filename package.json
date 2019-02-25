@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Boomatang/POI-Web-Application-V1#readme",
   "dependencies": {
     "boom": "^7.3.0",
+    "cloudinary": "^1.13.2",
     "dotenv": "^6.2.0",
     "handlebars": "^4.1.0",
     "hapi": "^18.1.0",

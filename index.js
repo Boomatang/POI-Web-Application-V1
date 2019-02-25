@@ -4,6 +4,10 @@ const Hapi = require('hapi');
 const dotenv = require('dotenv');
 require('./app/models/db');
 
+const cloudinary = require('cloudinary');
+
+
+
 const result = dotenv.config();
 if(result.error){
   console.log(result.error.message);
@@ -19,6 +23,12 @@ async function init() {
   await server.register(require('inert'));
   await server.register(require('vision'));
   await server.register(require('hapi-auth-cookie'));
+
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+  });
 
   server.views({
     engines: {
