@@ -2,12 +2,14 @@
   <header class="header item"><a href="/home"> Home Page </a></header>
   <div class="right menu">
     <a id="home"   class= "item" href="/home"> Home Page</a>
-    <a id="report" class= "item" href="/poi/create"> Create POI</a>
-    <a id="report" class= "item" href="/settings"> Settings</a>
+    <a id="poi_create" class= "item" href="/poi/create"> Create POI</a>
+    {{#if _user.admin}}
+      <a id="site_users" class= "item" href="/admin/users"> Site Users</a>
+    {{/if}}
+    <a id="settings" class= "item" href="/settings"> Settings</a>
     <a id="logout" class= "item" href="/logout"> Logout</a>
   </div>
 </nav>
-
 <script>
   $("#{{_id}}").addClass("active item");
 </script>

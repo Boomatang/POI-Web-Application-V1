@@ -2,6 +2,7 @@
 
 const POI = require('./app/controllers/poi');
 const Accounts = require('./app/controllers/accounts');
+const Admin = require('./app/controllers/admin');
 
 module.exports = [
   {method: 'GET', path: '/home', config: POI.home},
@@ -21,6 +22,8 @@ module.exports = [
 
   { method: 'GET', path: '/settings', config: Accounts.showSettings },
   { method: 'POST', path: '/settings', config: Accounts.updateSettings },
+
+  {method: 'GET', path: '/admin/users', config: Admin.showUsers},
 
   {
     method: 'GET',

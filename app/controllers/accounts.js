@@ -74,7 +74,7 @@ const Accounts = {
       try {
         const id = request.auth.credentials.id;
         const user = await  User.findById(id);
-        return h.view('settings', { title: 'Donation Settings', user: user});
+        return h.view('settings', { title: 'User Settings', user: user});
       } catch (err) {
         return h.view('login', {errors: [{ message: err.message}]});
       }

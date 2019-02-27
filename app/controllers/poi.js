@@ -1,6 +1,7 @@
 'use strict';
 
 const Poi = require('../models/poi');
+const User = require('../models/user');
 const cloudinary = require('cloudinary');
 const fs = require('fs');
 const unidv4 = require('uuid/v4');
@@ -8,8 +9,13 @@ const unidv4 = require('uuid/v4');
 const POI = {
   home: {
     handler: async  function (request, h) {
+
+      const id = request.auth.credentials.id;
+      const user = await User.findById(id);
+
       const pois = await Poi.find();
-      return h.view('home', {title: 'View POI\'s', pois: pois})
+
+      return h.view('home', {title: 'View POI\'s', user: user, pois: pois})
     }
   },
   create: {
@@ -61,14 +67,21 @@ const POI = {
   },
   showCreate: {
     handler: async function (request, h) {
-      return h.view('create_poi', {title: 'Create POI'});
+      const id = request.auth.credentials.id;
+      const user = await User.findById(id);
+
+      return h.view('create_poi', {title: 'Create POI', user: user});
     }
   },
   view: {
     handler: async function(request, h){
       let place = await Poi.findById(request.params.id);
       console.log(place);
-      return h.view('view_poi', {title: place.name, poi: place})
+
+      const id = request.auth.credentials.id;
+      const user = await User.findById(id);
+
+      return h.view('view_poi', {title: place.name, user:user, poi: place})
     }
   },
 
@@ -86,8 +99,10 @@ const POI = {
 
       let place = await Poi.findById(request.params.id);
 
+      const id = request.auth.credentials.id;
+      const user = await User.findById(id);
 
-      return h.view('update_poi', {title: 'Update' + place.name, poi: place})
+      return h.view('update_poi', {title: 'Update' + place.name, user: user, poi: place})
     }
   },
 
