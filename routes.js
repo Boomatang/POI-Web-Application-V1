@@ -24,6 +24,7 @@ module.exports = [
   { method: 'POST', path: '/settings', config: Accounts.updateSettings },
 
   {method: 'GET', path: '/admin/users', config: Admin.showUsers},
+  {method: 'GET', path: '/admin/delete/{id}', config: Admin.deleteUser},
 
   {
     method: 'GET',
