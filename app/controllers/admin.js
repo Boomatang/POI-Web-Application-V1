@@ -1,6 +1,7 @@
 'use strict';
 
 const User = require('../models/user');
+const Category = require('../models/category');
 
 const Admin = {
 
@@ -43,6 +44,55 @@ const Admin = {
       } catch (err) {
         return h.redirect('/admin/users', {errors: [{message: err.message}]});
       }
+    }
+  },
+
+  showCategories: {
+    handler: async function(request, h){
+      const id = request.auth.credentials.id;
+      const user = await User.findById(id);
+      if (!user.admin) {
+        const message = 'As a user you don\'t have access';
+        throw new Boom(message);
+      }
+
+      const categories = await Category.find();
+
+      return h.view("category", {user: user, categories: categories})
+  }
+},
+
+  createCategory: {
+    handler: async function(request, h){
+      const id = request.auth.credentials.id;
+      const user = await User.findById(id);
+      if (!user.admin) {
+        const message = 'As a user you don\'t have access';
+        throw new Boom(message);
+      }
+
+      const payload = request.payload;
+
+      let category = await Category.findByName(payload.Name);
+      console.log(category);
+      if (!category.name) {
+        const newCategory = new Category({name: payload.name});
+        await newCategory.save();
+      }
+
+      return h.redirect('/admin/category')
+    }
+  },
+
+  removeCategory: {
+    handler: async function(request, h){
+      const id = request.auth.credentials.id;
+      const user = await User.findById(id);
+      if (!user.admin) {
+        const message = 'As a user you don\'t have access';
+        throw new Boom(message);
+      }
+      return "remove"
     }
   }
 

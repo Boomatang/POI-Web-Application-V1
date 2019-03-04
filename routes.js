@@ -26,6 +26,10 @@ module.exports = [
   {method: 'GET', path: '/admin/users', config: Admin.showUsers},
   {method: 'GET', path: '/admin/delete/{id}', config: Admin.deleteUser},
 
+  {method: 'GET', path: '/admin/category', config: Admin.showCategories},
+  {method: 'POST', path: '/admin/category', config: Admin.createCategory},
+  {method: 'DELETE', path: '/admin/category/{id}/remove', config: Admin.removeCategory},
+
   {
     method: 'GET',
     path: '/{param*}',

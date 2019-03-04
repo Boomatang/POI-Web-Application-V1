@@ -13,7 +13,11 @@ const poiSchema = new Schema({
     lat: Number,
     long: Number
   },
-  image: String
+  image: String,
+  category: {
+    type: Schema.Types.ObjectId,
+    ref: 'Category'
+  }
 });
 
 poiSchema.statics.findById = function(id){

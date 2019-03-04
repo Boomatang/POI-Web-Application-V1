@@ -12,6 +12,7 @@ async function seed(){
   const data = require('./initdata.json');
   const User = require('./user');
   const Poi = require('./poi');
+  const Category = require('./category');
 
   const dbData = await seeder.seed(data, { dropDatabase: false, dropCollections: true });
 
