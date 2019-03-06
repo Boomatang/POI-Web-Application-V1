@@ -12,7 +12,12 @@
             </div>
             <div class="field">
               <label>Coastal Zone</label>
-              <input value="" type="text" name="coastalZone">
+              <select name="coastalZone" class="ui dropdown">
+                <option value="">Choose a Coastal Zone</option>
+                {{#each zones}}
+                <option value="{{_id}}">{{name}}</option>
+                {{/each}}
+              </select>
             </div>
           <div class="field">
             <label>Description</label>

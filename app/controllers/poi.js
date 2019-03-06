@@ -15,6 +15,8 @@ const POI = {
       const user = await User.findById(id);
 
       const pois = await Poi.find().populate('category');
+      // TODO I was going to display the poi under their categories
+      //  but I didn't know how to set the initdata.json file up to do this.
 
       return h.view('home', {title: 'View POI\'s', user: user, pois: pois})
     }
@@ -23,15 +25,18 @@ const POI = {
     handler: async function (request, h) {
       try {
         const payload = request.payload;
+        console.log(payload);
+        const category = await Category.findById(payload.coastalZone);
         let poi = new Poi({
           name: payload.name,
           description: payload.description,
-          coastalZone: payload.coastalZone,
+          category: category,
           geo: {
             lat: payload.lat,
             long: payload.long
           }
         });
+
 
         const file_name = unidv4() + '.jpg';
         const new_image = payload.fileUpload;
@@ -59,6 +64,9 @@ const POI = {
           console.log(`${file_name} was deleted`);
         });
 
+        category.poi.push(poi);
+        await category.save();
+
         return h.redirect('/home');
       } catch (err) {
         console.log(err);
@@ -70,8 +78,9 @@ const POI = {
     handler: async function (request, h) {
       const id = request.auth.credentials.id;
       const user = await User.findById(id);
+      const zones = await Category.find();
 
-      return h.view('create_poi', {title: 'Create POI', user: user});
+      return h.view('create_poi', {title: 'Create POI', user: user, zones: zones});
     }
   },
   view: {
@@ -98,12 +107,17 @@ const POI = {
   show_update_poi: {
     handler: async function(request, h){
 
-      let place = await Poi.findById(request.params.id);
-
       const id = request.auth.credentials.id;
       const user = await User.findById(id);
 
-      return h.view('update_poi', {title: 'Update' + place.name, user: user, poi: place})
+      let place = await Poi.findById(request.params.id);
+      const zones = await Category.find();
+
+      return h.view('update_poi', {
+        title: 'Update' + place.name,
+        user: user,
+        poi: place,
+        zones: zones})
     }
   },
 

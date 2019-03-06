@@ -17,7 +17,11 @@
         </div>
         <div class="field">
           <label>Coastal Zone</label>
-          <input value="{{poi.coastalZone}}" type="text" name="coastalZone">
+          <select id="coastZone" name="coastalZone" class="ui dropdown">
+            {{#each zones}}
+              <option value="{{_id}}">{{name}}</option>
+            {{/each}}
+          </select>
         </div>
         <div class="field">
           <label>Description</label>
@@ -40,3 +44,7 @@
   </article>
   </div>
 </section>
+
+<script>
+  $('#coastZone').val('{{poi.category._id}}');
+</script>
