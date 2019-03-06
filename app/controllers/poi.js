@@ -2,6 +2,7 @@
 
 const Poi = require('../models/poi');
 const User = require('../models/user');
+const Category = require('../models/category');
 const cloudinary = require('cloudinary');
 const fs = require('fs');
 const unidv4 = require('uuid/v4');
@@ -13,7 +14,7 @@ const POI = {
       const id = request.auth.credentials.id;
       const user = await User.findById(id);
 
-      const pois = await Poi.find();
+      const pois = await Poi.find().populate('category');
 
       return h.view('home', {title: 'View POI\'s', user: user, pois: pois})
     }
@@ -75,7 +76,7 @@ const POI = {
   },
   view: {
     handler: async function(request, h){
-      let place = await Poi.findById(request.params.id);
+      let place = await Poi.findById(request.params.id).populate('category');
       console.log(place);
 
       const id = request.auth.credentials.id;

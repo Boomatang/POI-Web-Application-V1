@@ -17,7 +17,7 @@ async function seed(){
   const dbData = await seeder.seed(data, { dropDatabase: false, dropCollections: true });
 
   console.log(dbData);
-};
+}
 
 db.on('error', function (err) {
   console.log(`database connection error: ${err}`);

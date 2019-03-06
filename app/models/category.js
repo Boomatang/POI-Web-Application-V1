@@ -5,11 +5,6 @@ const Schema = mongoose.Schema;
 
 const categorySchema = new Schema({
   name: String,
-  location: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Poi'
-  }],
-
 });
 
 categorySchema.statics.findByName = function(name) {
