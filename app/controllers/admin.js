@@ -2,9 +2,9 @@
 
 const User = require('../models/user');
 const Category = require('../models/category');
+const Joi = require('joi');
 
 const Admin = {
-
 
   showUsers: {
     handler: async function (request, h) {
@@ -63,6 +63,21 @@ const Admin = {
 },
 
   createCategory: {
+    validate: {
+      payload: {
+        name: Joi.string().required()
+      },
+      options: {
+        abortEarly: false
+      },
+      failAction: function (request, h, error) {
+        return h.view('create_poi', {
+          title: 'Create Poi Error',
+          errors: error.details
+        })
+          .takeover()
+          .code(400);
+      }},
     handler: async function(request, h){
       const id = request.auth.credentials.id;
       const user = await User.findById(id);
@@ -73,7 +88,7 @@ const Admin = {
 
       const payload = request.payload;
 
-      let category = await Category.findByName(payload.Name);
+      let category = await Category.findByName(payload.name);
       console.log(category);
       if (!category.name) {
         const newCategory = new Category({name: payload.name});

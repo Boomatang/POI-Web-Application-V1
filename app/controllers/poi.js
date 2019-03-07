@@ -1,5 +1,6 @@
 'use strict';
 
+const Joi = require('joi');
 const Poi = require('../models/poi');
 const User = require('../models/user');
 const Category = require('../models/category');
@@ -22,6 +23,28 @@ const POI = {
     }
   },
   create: {
+    validate: {
+      payload: {
+        name: Joi.string().required(),
+        description: Joi.string().required(),
+
+        lat: Joi.string().required(),
+        long: Joi.string().required(),
+
+        coastalZone: Joi.string().required(),
+        fileUpload: Joi.object()
+      },
+      options: {
+        abortEarly: false
+      },
+      failAction: function (request, h, error) {
+        return h.view('create_poi', {
+          title: 'Create Poi Error',
+          errors: error.details
+        })
+          .takeover()
+          .code(400);
+      }},
     handler: async function (request, h) {
       try {
         const payload = request.payload;
@@ -122,16 +145,39 @@ const POI = {
   },
 
   update_poi: {
+    validate: {
+      payload: {
+        name: Joi.string().required(),
+        description: Joi.string().required(),
+
+        lat: Joi.string().required(),
+        long: Joi.string().required(),
+
+        coastalZone: Joi.string().required(),
+        fileUpload: Joi.object()
+      },
+      options: {
+        abortEarly: false
+      },
+      failAction: function (request, h, error) {
+        return h.view('create_poi', {
+          title: 'Create Poi Error',
+          errors: error.details
+        })
+          .takeover()
+          .code(400);
+      }},
     handler: async function(request, h){
 
-      const edit_place = request.payload;
+      const payload = request.payload;
       const place = await Poi.findById(request.params.id);
+      const category = await Category.findById(payload.coastalZone);
 
-      place.name = edit_place.name;
-      place.description = edit_place.description;
-      place.coastalZone = edit_place.coastalZone;
-      place.geo.lat = edit_place.lat;
-      place.geo.long = edit_place.long;
+      place.name = payload.name;
+      place.description = payload.description;
+      place.category = category;
+      place.geo.lat = payload.lat;
+      place.geo.long = payload.long;
 
       await place.save();
 

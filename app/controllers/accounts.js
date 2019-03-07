@@ -1,5 +1,6 @@
 'use strict';
 
+const Joi = require('joi');
 const User = require('../models/user');
 
 const Accounts = {
@@ -17,6 +18,25 @@ const Accounts = {
   },
   signup: {
     auth: false,
+    validate: {
+      payload: {
+        firstName: Joi.string().required(),
+        lastName: Joi.string().required(),
+        email: Joi.string().email().required(),
+        password: Joi.string().required()
+      },
+      options: {
+        abortEarly: false
+      },
+      failAction: function (request, h, error) {
+        return h.view('signup', {
+          title: 'Sign up error',
+          errors: error.details
+        })
+          .takeover()
+          .code(400);
+      }
+    },
     handler: async function(request, h) {
       try {
         const payload = request.payload;
@@ -47,6 +67,22 @@ const Accounts = {
   },
   login: {
     auth: false,
+    validate: {
+      payload: {
+        email: Joi.string().email().required(),
+        password: Joi.string().required()
+      },
+      options: {
+        abortEarly: false
+      },
+      failAction: function (request, h, error) {
+        return h.view('login', {
+          title: 'Login Error',
+          errors: error.details
+        })
+          .takeover()
+          .code(400);
+      }},
     handler: async function(request, h) {
       const {email, password} = request.payload;
       try {
@@ -81,6 +117,24 @@ const Accounts = {
     }
   },
   updateSettings: {
+    validate: {
+      payload: {
+        firstName: Joi.string().required(),
+        lastName: Joi.string().required(),
+        email: Joi.string().email().required(),
+        password: Joi.string().required()
+      },
+      options: {
+        abortEarly: false
+      },
+      failAction: function (request, h, error) {
+        return h.view('settings', {
+          title: 'Settings Error',
+          errors: error.details
+        })
+          .takeover()
+          .code(400);
+      }},
     handler: async function (request, h) {
       const userEdit = request.payload;
       const id = request.auth.credentials.id;
